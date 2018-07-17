@@ -152,21 +152,6 @@ namespace MyFirstUnitTests.TestSamples
              Assert.Contains("ERROR", responseString);
         }
 
-        /// <summary>
-        /// 不要null
-        /// </summary>
-        [Fact]
-        [Trait ("Category", "RestAPI")]
-        public async Task Test_demo_list_error_log () {
-           
-           //需要加入appsettings.json 給APISample.dll讀取mongo url
-           HttpResponseMessage response = await _client.GetAsync($"/api/Demo/demo_list_error_log");
 
-            response.EnsureSuccessStatusCode();
-            string responseString = await response.Content.ReadAsStringAsync();
-            _output.WriteLine(responseString);
-
-            Assert.Contains("xx", responseString);
-        }
     }
 }
