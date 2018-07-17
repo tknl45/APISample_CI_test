@@ -5,9 +5,9 @@ namespace MyFirstUnitTests.TestSamples
     public class Theory
     {
         [Theory]
-        [InlineData(2)]
-        [InlineData(4)]
-        [InlineData(6)]
+        [InlineData(1)]
+        [InlineData(3)]
+        [InlineData(5)]
         public void MyFirstTheory(int value)
         {
             Assert.True(IsOdd(value));
