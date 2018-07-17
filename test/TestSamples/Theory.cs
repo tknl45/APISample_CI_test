@@ -5,8 +5,8 @@ namespace MyFirstUnitTests.TestSamples
     public class Theory
     {
         [Theory]
-        [InlineData(3)]
-        [InlineData(5)]
+        [InlineData(2)]
+        [InlineData(4)]
         [InlineData(6)]
         public void MyFirstTheory(int value)
         {
