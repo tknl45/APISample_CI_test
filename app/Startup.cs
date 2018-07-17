@@ -40,10 +40,10 @@ namespace APISample
             );
 
             //loggin
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddFile("app.log", append: true);
-            });
+            // services.AddLogging(loggingBuilder =>
+            // {
+            //     loggingBuilder.AddFile("app.log", append: true);
+            // });
 
 
 
