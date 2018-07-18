@@ -1,26 +1,26 @@
-image: microsoft/aspnetcore:2.0
+image: microsoft/aspnetcore-build:2.0
 stages:
   - build
-  - deploy_dev
+  - test
 before_script:
   # Install ssh-agent if not already installed, it is required by Docker.
   # (change apt-get to yum if you use a CentOS-based image)
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
 
   # Run ssh-agent (inside the build environment)
-  - eval $(ssh-agent -s)
+  #- eval $(ssh-agent -s)
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
   # error: https://gitlab.com/gitlab-examples/ssh-private-key/issues/1
   # - echo "$SSH_PRIVATE_KEY_DEV"
-  - ssh-add <(echo "$SSH_PRIVATE_KEY_DEV")
+  #- ssh-add <(echo "$SSH_PRIVATE_KEY_DEV")
 
   # For Docker builds disable host key checking. Be aware that by adding that
   # you are suspectible to man-in-the-middle attacks.
   # WARNING: Use this only with the Docker executor, if you use it with shell
   # you will overwrite your user's SSH config.
-  - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  #- mkdir -p ~/.ssh
+  #- '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   - dotnet --version
 build_job:
   stage: build
@@ -29,6 +29,16 @@ build_job:
   script:
     - dotnet restore ./app/APISample.csproj --verbosity m
     - dotnet publish ./app/APISample.csproj
+test_job:
+  stage: test
+  only:
+    - master
+  script:
+    - dotnet restore ./test/MyFirstUnitTests.csproj --verbosity m
+    - dotnet build ./test/MyFirstUnitTests.csproj 
+    - cd test
+    - dotnet test
+
 #deploy_dev_job:
 #  stage: deploy_dev
 #  environment:
